@@ -1,0 +1,196 @@
+<mxfile host="65bd71144e">
+    <diagram id="easycoloc_uc" name="Use Case Diagram">
+        <mxGraphModel dx="1165" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1350" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="EasyColoc : usecase" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=16;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="15" width="860" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="boundary" value="Système EasyColoc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1a237e;strokeWidth=2;fontSize=13;fontStyle=1;fontColor=#1a237e;verticalAlign=top;spacingTop=6;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="60" width="880" height="1250" as="geometry"/>
+                </mxCell>
+                <mxCell id="sep1" value="" style="endArrow=none;startArrow=none;strokeColor=#cccccc;dashed=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="215" y="200" as="sourcePoint"/>
+                        <mxPoint x="1065" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="sep2" value="" style="endArrow=none;startArrow=none;strokeColor=#cccccc;dashed=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="215" y="795" as="sourcePoint"/>
+                        <mxPoint x="1065" y="795" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="sep3" value="" style="endArrow=none;startArrow=none;strokeColor=#cccccc;dashed=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="215" y="1005" as="sourcePoint"/>
+                        <mxPoint x="1065" y="1005" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="actor_visitor" value="Visiteur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="108" width="36" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_member" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#6c8ebf;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="440" width="36" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_owner" value="Owner" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#82b366;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="855" width="36" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gen_owner_member" value="" style="endArrow=block;endFill=0;endSize=12;strokeColor=#555555;strokeWidth=2;" parent="1" source="actor_owner" target="actor_member" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_admin" value="Global Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffe6cc;strokeColor=#d6b656;fontColor=#d6b656;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="82" y="1170" width="36" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_register" value="S&#39;inscrire" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="285" y="103" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_login" value="Se connecter" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="103" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_profile" value="Gérer le profil" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="735" y="103" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_join" value="Rejoindre une colocation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="228" width="185" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_view_members" value="Voir les membres" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="228" width="155" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_leave" value="Quitter la colocation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="228" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_accept_inv" value="Accepter / Refuser invitation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="320" width="190" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_join_accept" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endFill=0;endSize=8;dashed=1;strokeColor=#555555;fontSize=11;" parent="1" source="uc_join" target="uc_accept_inv" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_add_expense" value="Ajouter une dépense" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="430" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_view_expenses" value="Voir les dépenses" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="430" width="155" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_delete_expense" value="Supprimer une dépense" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="745" y="430" width="180" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_filter" value="Filtrer dépenses par mois" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="745" y="515" width="180" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="ext_filter_view" value="&lt;&lt;extend&gt;&gt;" style="endArrow=open;endFill=0;endSize=8;dashed=1;strokeColor=#555555;fontSize=11;" parent="1" source="uc_filter" target="uc_view_expenses" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_view_balance" value="Voir les soldes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="610" width="155" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_who_owes" value="Voir qui doit à qui" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="610" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_mark_paid" value="Marquer un paiement" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="745" y="610" width="175" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_calc_balance" value="Calculer les balances automatiquement" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="700" width="210" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_add_calc" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endFill=0;endSize=8;dashed=1;strokeColor=#555555;fontSize=11;" parent="1" source="uc_add_expense" target="uc_calc_balance" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_paid_calc" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endFill=0;endSize=8;dashed=1;strokeColor=#555555;fontSize=11;" parent="1" source="uc_mark_paid" target="uc_calc_balance" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_create_coloc" value="Créer une colocation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="825" width="175" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_invite" value="Inviter un membre" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="825" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_remove_member" value="Retirer un membre" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="825" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_manage_cat" value="Gérer les catégories" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="920" width="175" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_cancel_coloc" value="Annuler la colocation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="920" width="175" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_view_stats" value="Voir les statistiques globales" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="1035" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_ban" value="Bannir un utilisateur" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="1035" width="175" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_unban" value="Débannir un utilisateur" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="795" y="1035" width="185" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_v_reg" value="" style="endArrow=none;strokeColor=#666666;" parent="1" source="actor_visitor" target="uc_register" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_log" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_login" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_pro" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_profile" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_joi" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_join" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_vm" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_view_members" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_lv" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_leave" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_ae" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_add_expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_ve" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_view_expenses" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_de" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_delete_expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_vb" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_view_balance" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_wo" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_who_owes" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_m_mp" value="" style="endArrow=none;strokeColor=#6c8ebf;" parent="1" source="actor_member" target="uc_mark_paid" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_o_cc" value="" style="endArrow=none;strokeColor=#82b366;" parent="1" source="actor_owner" target="uc_create_coloc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_o_inv" value="" style="endArrow=none;strokeColor=#82b366;" parent="1" source="actor_owner" target="uc_invite" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_o_rm" value="" style="endArrow=none;strokeColor=#82b366;" parent="1" source="actor_owner" target="uc_remove_member" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_o_mc" value="" style="endArrow=none;strokeColor=#82b366;" parent="1" source="actor_owner" target="uc_manage_cat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_o_ca" value="" style="endArrow=none;strokeColor=#82b366;" parent="1" source="actor_owner" target="uc_cancel_coloc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_a_vs" value="" style="endArrow=none;strokeColor=#d6b656;" parent="1" source="actor_admin" target="uc_view_stats" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_a_bn" value="" style="endArrow=none;strokeColor=#d6b656;" parent="1" source="actor_admin" target="uc_ban" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_a_ub" value="" style="endArrow=none;strokeColor=#d6b656;" parent="1" source="actor_admin" target="uc_unban" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="endArrow=block;endFill=0;endSize=12;strokeColor=#555555;strokeWidth=2;" edge="1" parent="1" source="actor_admin" target="actor_owner">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="100" y="1160" as="sourcePoint"/>
+                        <mxPoint x="99.41" y="955" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
