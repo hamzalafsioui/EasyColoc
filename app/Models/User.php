@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -43,6 +44,38 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
+            'is_banned' => 'boolean',
         ];
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
+
+    public function colocations()
+    {
+        return $this->belongsToMany(Colocation::class, 'memberships');
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'paid_by');
+    }
+
+    public function sentPayments()
+    {
+        return $this->hasMany(Payment::class, 'from_user_id');
+    }
+
+    public function receivedPayments()
+    {
+        return $this->hasMany(Payment::class, 'to_user_id');
+    }
+
+    public function sentInvitations()
+    {
+        return $this->hasMany(Invitation::class, 'invited_by');
     }
 }
