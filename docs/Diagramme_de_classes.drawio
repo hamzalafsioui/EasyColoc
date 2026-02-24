@@ -1,0 +1,165 @@
+<mxfile host="65bd71144e">
+    <diagram name="Diagramme de classes - EasyColoc" id="easycoloc-dc-v4">
+        <mxGraphModel dx="990" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1300" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="User" value="User" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="230" width="220" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="Ua" value="    +int id&#xa;    +string name&#xa;    +string email&#xa;    +string password&#xa;    +boolean is_admin&#xa;    +boolean is_banned&#xa;    +int reputation&#xa;    +datetime email_verified_at&#xa;    +string remember_token&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;----------------------------------------------------&#xa;    +register() void&#xa;    +login() void&#xa;    +updateProfile() void&#xa;    +isGlobalAdmin() bool&#xa;    +isBanned() bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="User" vertex="1">
+                    <mxGeometry y="30" width="220" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="Colocation" value="Colocation" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="160" width="240" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="Ca" value="     +int id&#xa;    +string name&#xa;    +string description&#xa;    +enum status&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;----------------------------------------------------------&#xa;    +create() void&#xa;    +cancel() void&#xa;    +getActiveMembers() Collection&#xa;    +calculateBalances() array&#xa;    +getSettlements() array&#xa;    +addMember(user) void&#xa;    +removeMember(user) void&#xa;    +filterExpensesByMonth() Collection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Colocation" vertex="1">
+                    <mxGeometry y="30" width="240" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="Membership" value="Membership" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="590" width="240" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="Ma" value="  +int id&#xa;    +int user_id&#xa;    +int colocation_id&#xa;    +enum role&#xa;    +datetime joined_at&#xa;    +datetime left_at&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;-----------------------------------------------------&#xa;    +leave() void&#xa;    +isActive() boolean&#xa;    +getRole() string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Membership" vertex="1">
+                    <mxGeometry y="30" width="240" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="Invitation" value="Invitation" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="270" width="220" height="285" as="geometry"/>
+                </mxCell>
+                <mxCell id="Ia" value="    +int id&#xa;    +int colocation_id&#xa;    +int invited_by&#xa;    +string email&#xa;    +string token&#xa;    +enum status&#xa;    +datetime expires_at&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;----------------------------------------------------&#xa;    +accept() void&#xa;    +refuse() void&#xa;    +isExpired() boolean&#xa;    +generateToken() string&#xa;    +sendEmail() void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Invitation" vertex="1">
+                    <mxGeometry y="30" width="220" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="Expense" value="Expense" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="810" width="240" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="Ea" value="    +int id&#xa;    +int colocation_id&#xa;    +int paid_by&#xa;    +int category_id&#xa;    +string title&#xa;    +decimal amount&#xa;    +date date&#xa;    +string description&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;-------------------------------------------------------&#xa;    +getSharePerMember() decimal&#xa;    +getMonthlyStats() array&#xa;    +getByCategoryStats() array" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Expense" vertex="1">
+                    <mxGeometry y="30" width="240" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="Category" value="Category" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1350" y="837.5" width="180" height="175" as="geometry"/>
+                </mxCell>
+                <mxCell id="Cata" value="    +int id&#xa;    +int colocation_id&#xa;    +string name&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;-----------------------------------------&#xa;    +getExpenses() Collection&#xa;    +countExpenses() int&#xa;    +getTotalAmount() decimal" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Category" vertex="1">
+                    <mxGeometry y="30" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="Payment" value="Payment" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#2D7600;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="700" width="220" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="Paya" value="    +int id&#xa;    +int colocation_id&#xa;    +int from_user_id&#xa;    +int to_user_id&#xa;    +decimal amount&#xa;    +datetime paid_at&#xa;    +datetime created_at&#xa;    +datetime updated_at&#xa;------------------------------------------------&#xa;    +markAsPaid() void&#xa;    +getSettledAmount() decimal" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;" parent="Payment" vertex="1">
+                    <mxGeometry y="30" width="220" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;startArrow=diamondThin;startFill=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=1;" parent="1" source="Colocation" target="Membership" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel2" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel2_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel2" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel3" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;startArrow=diamondThin;startFill=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=1;" parent="1" source="Colocation" target="Invitation" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel3_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel3" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel3_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel3" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel4" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;startArrow=diamondThin;startFill=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=1;" parent="1" source="Colocation" target="Expense" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1050" y="600"/>
+                            <mxPoint x="930" y="600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel4_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel4" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel4_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel4" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel7" value="joins" style="html=1;edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#6c8ebf;strokeWidth=1;" parent="1" source="User" target="Membership" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="570" y="650"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel7_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel7" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel7_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel7" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel10" value="classifies" style="html=1;edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#d79b00;strokeWidth=1;dashed=1;" parent="1" source="Category" target="Expense" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel10_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel10" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel10_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel10" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="relPayColoc" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;startArrow=diamond;startFill=1;endArrow=open;strokeColor=#2D7600;strokeWidth=1.5;" parent="1" source="Colocation" target="Payment" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="880" y="530"/>
+                            <mxPoint x="720" y="530"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="relPayColoc_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="relPayColoc" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="relPayColoc_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="relPayColoc" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel9" value="&lt;&lt;invites&gt;&gt;" style="html=1;edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#b85450;strokeWidth=1;dashed=1;" parent="1" source="User" target="Invitation" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="660" y="290"/>
+                            <mxPoint x="660" y="490"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel9_s" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel9" connectable="0" vertex="1">
+                    <mxGeometry x="-0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel9_t" value="*" style="resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" parent="rel9" connectable="0" vertex="1">
+                    <mxGeometry x="0.85" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;&amp;nbsp; &amp;nbsp; +int owner_id&lt;/span&gt;&lt;br style=&quot;forced-color-adjust: none; color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); padding: 0px; margin: 0px; font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;" style="text;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="120" width="110" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
