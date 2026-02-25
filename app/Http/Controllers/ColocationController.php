@@ -162,5 +162,28 @@ class ColocationController extends Controller
             ->with('success', 'Colocation has been cancelled and reputation updated. -)');
     }
 
+    /**
+     * Leave the colocation.
+     */
+    public function leave(Colocation $colocation)
+    {
+        $membership = $colocation->memberships()->where('user_id', auth()->id())->first();
+
+        if (!$membership || $membership->role === 'owner') {
+            abort(403, 'Owners cannot leave. They must transfer ownership or cancel the colocation.');
+        }
+
+        $balances = $colocation->calculateBalances();
+        $userBalance = $balances[auth()->id()]['balance'] ?? 0;
+
+        // Apply reputation logic
+        auth()->user()->updateReputation($userBalance >= 0 ? 1 : -1);
+
+        $membership->update(['left_at' => now()]);
+
+        return redirect()->route('colocations.index')
+            ->with('success', 'You have left the colocation. -)');
+    }
+
    
 }
