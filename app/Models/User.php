@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Services\ReputationManager;
 
 class User extends Authenticatable
 {
@@ -78,4 +79,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Invitation::class, 'invited_by');
     }
+
+    /**
+     * Update the user reputation score.
+     *
+     * @param int $points
+     * @return void
+     */
+    public function updateReputation(int $points)
+    {
+        $manager = new ReputationManager();
+        if ($points > 0) {
+            $manager->increase($this, $points);
+        } else {
+            $manager->decrease($this, abs($points));
+        }
+    }
+
+   
 }
