@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Colocation;
 use App\Models\Membership;
 use App\Models\User;
+use App\Http\Requests\StoreColocationRequest;
+use App\Http\Requests\UpdateColocationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -30,17 +32,12 @@ class ColocationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreColocationRequest $request)
     {
         if (auth()->user()->hasActiveColocation()) {
             return redirect()->back()
                 ->with('error', 'You already have an active colocation. You must leave or cancel it before creating a new one.');
         }
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
 
         $colocation = Colocation::create([
             'name' => $request->name,
@@ -100,19 +97,13 @@ class ColocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Colocation $colocation)
+    public function update(UpdateColocationRequest $request, Colocation $colocation)
     {
         $membership = $colocation->memberships()->where('user_id', auth()->id())->first();
 
         if (!$membership || $membership->role !== 'owner') {
             abort(403);
         }
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:active,cancelled',
-        ]);
 
         $colocation->update($request->only('name', 'description', 'status'));
 
