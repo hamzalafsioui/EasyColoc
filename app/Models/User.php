@@ -111,5 +111,18 @@ class User extends Authenticatable
             ->exists();
     }
 
-   
+    /**
+     * Get current active membership of the user.
+     *
+     * @return Membership|null
+     */
+    public function activeMembership()
+    {
+        return $this->memberships()
+            ->whereNull('left_at')
+            ->whereHas('colocation', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->first();
+    }
 }
