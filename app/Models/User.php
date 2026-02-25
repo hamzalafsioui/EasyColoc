@@ -96,5 +96,20 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * Check if the user has an active colocation membership.
+     *
+     * @return bool
+     */
+    public function hasActiveColocation(): bool
+    {
+        return $this->memberships()
+            ->whereNull('left_at')
+            ->whereHas('colocation', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->exists();
+    }
+
    
 }
