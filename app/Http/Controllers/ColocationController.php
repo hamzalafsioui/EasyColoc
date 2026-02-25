@@ -137,5 +137,30 @@ class ColocationController extends Controller
             ->with('success', 'Colocation deleted successfully. -)');
     }
 
+    /**
+     * Cancel the colocation.
+     */
+    public function cancel(Colocation $colocation)
+    {
+        $membership = $colocation->memberships()->where('user_id', auth()->id())->first();
+
+        if (!$membership || $membership->role !== 'owner') {
+            abort(403);
+        }
+
+        $balances = $colocation->calculateBalances();
+
+        // Update reputation for all members before cancelling
+        foreach ($colocation->memberships()->whereNull('left_at')->get() as $m) {
+            $userBalance = $balances[$m->user_id]['balance'] ?? 0;
+            $m->user->updateReputation($userBalance >= 0 ? 1 : -1);
+        }
+
+        $colocation->update(['status' => 'cancelled']);
+
+        return redirect()->route('colocations.show', $colocation)
+            ->with('success', 'Colocation has been cancelled and reputation updated. -)');
+    }
+
    
 }
