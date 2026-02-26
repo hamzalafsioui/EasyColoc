@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\ExpenseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::post('colocations/{colocation}/invitations', [InvitationController::class, 'create'])->name('invitations.create');
     Route::post('invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
     Route::post('invitations/{token}/refuse', [InvitationController::class, 'refuse'])->name('invitations.refuse');
+    Route::resource('colocations.expenses', ExpenseController::class)->only(['store', 'update', 'destroy']);
     Route::post('colocations/{colocation}/leave', [MembershipController::class, 'leave'])->name('memberships.leave');
     Route::post('colocations/{colocation}/remove-member/{user}', [MembershipController::class, 'remove'])->name('memberships.remove');
 });
