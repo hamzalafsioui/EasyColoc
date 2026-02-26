@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Colocation;
-use App\Models\Invitation;
 use App\Models\User;
 use App\Services\AdjustmentService;
 use Illuminate\Http\Request;
@@ -16,39 +15,6 @@ class MembershipController extends Controller
     public function __construct(AdjustmentService $adjustmentService)
     {
         $this->adjustmentService = $adjustmentService;
-    }
-
-    /**
-     * Join a colocation via invitation token.
-     */
-    public function join(Request $request, string $token)
-    {
-        $invitation = Invitation::where('token', $token)->firstOrFail();
-
-        // Check if token is expired or already used
-        if ($invitation->status !== 'pending' || $invitation->expires_at < now()) {
-            return redirect()->route('dashboard')->with('error', 'The invitation is invalid or has expired. (-_-)');
-        }
-
-        // Check if user has active colocation
-        if (auth()->user()->hasActiveColocation()) {
-            return redirect()->route('dashboard')->with('error', 'You already have an active colocation. (-_-)');
-        }
-
-        $colocation = $invitation->colocation;
-
-        DB::transaction(function () use ($colocation, $invitation) {
-            $colocation->memberships()->create([
-                'user_id' => auth()->id(),
-                'role' => 'member',
-                'joined_at' => now(),
-            ]);
-
-            $invitation->update(['status' => 'accepted']);
-        });
-
-        return redirect()->route('colocations.show', $colocation)
-            ->with('success', 'You have successfully joined the colocation.');
     }
 
     /**
