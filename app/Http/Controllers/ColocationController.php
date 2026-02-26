@@ -9,9 +9,16 @@ use App\Http\Requests\StoreColocationRequest;
 use App\Http\Requests\UpdateColocationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Services\AdjustmentService;
 
 class ColocationController extends Controller
 {
+    private AdjustmentService $adjustmentService;
+
+    public function __construct(AdjustmentService $adjustmentService)
+    {
+        $this->adjustmentService = $adjustmentService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -176,5 +183,53 @@ class ColocationController extends Controller
             ->with('success', 'You have left the colocation. -)');
     }
 
-   
+    /**
+     * Remove a member from the colocation.
+     */
+    public function removeMember(Colocation $colocation, User $user)
+    {
+        $ownerMembership = $colocation->memberships()
+            ->where('user_id', auth()->id())
+            ->whereNull('left_at')
+            ->first();
+
+        if (!$ownerMembership || $ownerMembership->role !== 'owner') {
+            abort(403);
+        }
+
+        if ($colocation->status !== 'active') {
+            abort(403);
+        }
+
+        $memberMembership = $colocation->memberships()
+            ->where('user_id', $user->id)
+            ->whereNull('left_at')
+            ->first();
+
+        if (!$memberMembership || $memberMembership->role === 'owner') {
+            abort(403);
+        }
+
+        DB::transaction(function () use ($colocation, $user, $memberMembership) {
+
+            $balances = $colocation->calculateBalances();
+            $userBalance = $balances[$user->id]['balance'] ?? 0;
+
+            $user->updateReputation($userBalance >= 0 ? 1 : -1);
+
+            if ($userBalance < 0) {
+                $this->adjustmentService->imputeDebtToOwner(
+                    $colocation,
+                    auth()->user(),
+                    $user,
+                    abs($userBalance)
+                );
+            }
+
+            $memberMembership->update(['left_at' => now()]);
+        });
+
+        return redirect()->route('colocations.show', $colocation)
+            ->with('success', "Member {$user->name} has been removed successfully.");
+    }
 }
