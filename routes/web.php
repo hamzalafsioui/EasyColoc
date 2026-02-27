@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     // colocation
     Route::resource('colocations', ColocationController::class);
     Route::post('colocations/{colocation}/cancel', [ColocationController::class, 'cancel'])->name('colocations.cancel');
+    Route::get('colocations/{colocation}/balances', [ColocationController::class, 'balances'])->name('colocations.balances');
 
     // Invitations
     Route::get('colocations/{colocation}/invitations', [InvitationController::class, 'index'])->name('invitations.index');
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/users', [AdminDashboardController::class, 'users'])->name('users.index');
     Route::post('/users/{user}/ban', [AdminDashboardController::class, 'ban'])->name('users.ban');
     Route::post('/users/{user}/unban', [AdminDashboardController::class, 'unban'])->name('users.unban');
 });
