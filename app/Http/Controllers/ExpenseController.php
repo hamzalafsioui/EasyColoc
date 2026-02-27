@@ -11,6 +11,49 @@ use Illuminate\Http\Request;
 class ExpenseController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request, Colocation $colocation)
+    {
+        if (!$colocation->users()->where('user_id', auth()->id())->exists()) {
+            abort(403);
+        }
+
+        $month = $request->get('month', now()->format('Y-m'));
+        $categoryId = $request->get('category_id');
+
+        $query = $colocation->expenses()->with(['payer', 'category']);
+
+        if ($request->has('month') && $month) {
+            $query->where('date', 'like', "{$month}%");
+        }
+
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        $expenses = $query->latest('date')->paginate(20)->withQueryString();
+        $categories = $colocation->categories;
+
+        return view('expenses.index', compact('colocation', 'expenses', 'categories', 'month', 'categoryId'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Colocation $colocation)
+    {
+        if (!$colocation->users()->where('user_id', auth()->id())->exists()) {
+            abort(403);
+        }
+
+        $categories = $colocation->categories;
+        $members = $colocation->memberships()->whereNull('left_at')->with('user')->get()->pluck('user');
+
+        return view('expenses.create', compact('colocation', 'categories', 'members'));
+    }
+
+    /**
      * Store a newly created expense in storage.
      */
     public function store(StoreExpenseRequest $request, Colocation $colocation)
