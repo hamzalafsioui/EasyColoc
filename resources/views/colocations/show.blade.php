@@ -68,6 +68,15 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm">
                                 {{ $colocation->description ?? 'No description provided.' }}
                             </p>
+
+                            @if($myMembership && $myMembership->role === 'owner')
+                            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                                <button onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'manage-categories' }))" class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+                                    Manage Categories
+                                </button>
+                            </div>
+                            @endif
+
                             <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400">
                                 Created {{ $colocation->created_at->format('M d, Y') }}
                             </div>
@@ -208,7 +217,8 @@
                                     <input type="month" name="month" value="{{ $month }}" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-sm" onchange="this.form.submit()">
                                 </form>
                                 @if($colocation->status === 'active')
-                                <a href="#" class="px-3 py-2 bg-indigo-600 text-white text-xs font-bold rounded hover:bg-indigo-700 uppercase">+ Add</a>
+                                <a href="{{ route('colocations.expenses.index', $colocation) }}" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline px-2">View All</a>
+                                <a href="{{ route('colocations.expenses.create', $colocation) }}" class="px-3 py-2 bg-indigo-600 text-white text-xs font-bold rounded hover:bg-indigo-700 uppercase">+ Add</a>
                                 @endif
                             </div>
                         </div>
@@ -288,6 +298,54 @@
                 </x-primary-button>
             </div>
         </form>
+    </x-modal>
+
+    <x-modal name="manage-categories" focusable>
+        <div class="p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                {{ __('Manage Categories') }}
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Add Category Form -->
+                <form method="POST" action="{{ route('colocations.categories.store', $colocation) }}" class="flex items-end space-x-2">
+                    @csrf
+                    <div class="flex-1">
+                        <x-input-label for="new_category_name" value="{{ __('New Category') }}" />
+                        <x-text-input id="new_category_name" name="name" type="text" class="mt-1 block w-full" placeholder="{{ __('Category Name') }}" required />
+                    </div>
+                    <x-primary-button>
+                        {{ __('Add') }}
+                    </x-primary-button>
+                </form>
+
+                <div class="mt-6">
+                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">Existing Categories</h3>
+                    <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @foreach($colocation->categories as $category)
+                        <li class="py-3 flex justify-between items-center">
+                            <span class="text-sm text-gray-900 dark:text-gray-100">{{ $category->name }}</span>
+                            <form action="{{ route('colocations.categories.destroy', [$colocation, $category]) }}" method="POST" onsubmit="return confirm('Delete this category? Only possible if no expenses use it.')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-700">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Close') }}
+                </x-secondary-button>
+            </div>
+        </div>
     </x-modal>
     @endif
 </x-app-layout>
