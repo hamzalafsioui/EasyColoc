@@ -8,14 +8,17 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    // ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,6 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::post('colocations/{colocation}/payments', [PaymentController::class, 'store'])->name('colocations.payments.store');
     Route::post('colocations/{colocation}/leave', [MembershipController::class, 'leave'])->name('memberships.leave');
     Route::post('colocations/{colocation}/remove-member/{user}', [MembershipController::class, 'remove'])->name('memberships.remove');
+});
+
+// Admin routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/users/{user}/ban', [AdminDashboardController::class, 'ban'])->name('users.ban');
+    Route::post('/users/{user}/unban', [AdminDashboardController::class, 'unban'])->name('users.unban');
 });
 
 require __DIR__ . '/auth.php';
