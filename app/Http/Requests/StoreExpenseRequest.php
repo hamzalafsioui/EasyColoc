@@ -31,7 +31,7 @@ class StoreExpenseRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0.01',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'paid_by' => 'nullable|exists:users,id',
