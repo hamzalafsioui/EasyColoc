@@ -78,9 +78,12 @@
                     <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">Members</h3>
-                            @if($myMembership && $myMembership->role === 'owner')
-                            <button onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'invite-member' }))" class="text-indigo-600 dark:text-indigo-400 text-sm font-semibold hover:underline">+ Invite</button>
-                            @endif
+                            <div class="flex items-center space-x-4">
+                                @if($myMembership && $myMembership->role === 'owner')
+                                <a href="{{ route('invitations.index', $colocation) }}" class="text-xs text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 underline">Sent Invitations</a>
+                                <button onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'invite-member' }))" class="text-indigo-600 dark:text-indigo-400 text-sm font-semibold hover:underline">+ Invite</button>
+                                @endif
+                            </div>
                         </div>
                         <div class="p-6">
                             <ul class="space-y-4">
@@ -256,4 +259,35 @@
             </div>
         </div>
     </div>
+
+    @if($myMembership && $myMembership->role === 'owner')
+    <x-modal name="invite-member" focusable>
+        <form method="POST" action="{{ route('invitations.create', $colocation) }}" class="p-6">
+            @csrf
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Invite a new member') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                {{ __('Enter the email address of the person you want to invite to this colocation.') }}
+            </p>
+
+            <div class="mt-6">
+                <x-input-label for="email" value="{{ __('Email Address') }}" class="sr-only" />
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-3/4" placeholder="{{ __('Email') }}" required />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-primary-button class="ms-3">
+                    {{ __('Send Invitation') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </x-modal>
+    @endif
 </x-app-layout>
