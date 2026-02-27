@@ -15,6 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(auth()->user()->is_admin)
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->hasActiveColocation())
+                    <x-nav-link :href="route('colocations.show', auth()->user()->activeMembership()->colocation_id)" :active="request()->routeIs('colocations.show')">
+                        {{ __('My Colocation') }}
+                    </x-nav-link>
+                    @else
+                    <x-nav-link :href="route('colocations.create')" :active="request()->routeIs('colocations.create')">
+                        {{ __('Create Colocation') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -43,7 +59,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -70,6 +86,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if(auth()->user()->is_admin)
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                {{ __('Admin Dashboard') }}
+            </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->hasActiveColocation())
+            <x-responsive-nav-link :href="route('colocations.show', auth()->user()->activeMembership()->colocation_id)" :active="request()->routeIs('colocations.show')">
+                {{ __('My Colocation') }}
+            </x-responsive-nav-link>
+            @else
+            <x-responsive-nav-link :href="route('colocations.create')" :active="request()->routeIs('colocations.create')">
+                {{ __('Create Colocation') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -89,7 +121,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
