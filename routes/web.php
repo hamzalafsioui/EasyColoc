@@ -28,9 +28,14 @@ Route::middleware('auth')->group(function () {
     // colocation
     Route::resource('colocations', ColocationController::class);
     Route::post('colocations/{colocation}/cancel', [ColocationController::class, 'cancel'])->name('colocations.cancel');
+
+    // Invitations
+    Route::get('colocations/{colocation}/invitations', [InvitationController::class, 'index'])->name('invitations.index');
     Route::post('colocations/{colocation}/invitations', [InvitationController::class, 'create'])->name('invitations.create');
+    Route::get('invitations/{token}', [InvitationController::class, 'show'])->name('invitations.show');
     Route::post('invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
     Route::post('invitations/{token}/refuse', [InvitationController::class, 'refuse'])->name('invitations.refuse');
+    Route::delete('invitations/{invitation}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
     Route::resource('colocations.expenses', ExpenseController::class)->only(['store', 'update', 'destroy']);
     Route::resource('colocations.categories', CategoryController::class)->only(['store', 'update', 'destroy']);
     Route::post('colocations/{colocation}/payments', [PaymentController::class, 'store'])->name('colocations.payments.store');
