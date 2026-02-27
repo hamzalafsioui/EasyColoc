@@ -52,6 +52,11 @@ class ColocationController extends Controller
             'joined_at' => now(),
         ]);
 
+        // Create default category
+        $colocation->categories()->create([
+            'name' => 'General',
+        ]);
+
         return redirect()->route('colocations.show', $colocation)
             ->with('success', 'Colocation created successfully. -)');
     }
