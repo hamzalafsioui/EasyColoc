@@ -141,8 +141,14 @@
 
                     <!-- Global Balance Summary -->
                     <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">Balances Summary</h3>
+                            <a href="{{ route('colocations.balances', $colocation) }}" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
+                                View Full Details
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -168,43 +174,46 @@
                         </div>
                     </div>
 
-                    <!-- Recommended Settlements -->
+                    <!-- Suggested Repayments -->
                     <div class="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-900/50 shadow sm:rounded-lg overflow-hidden">
-                        <div class="px-6 py-4 border-b border-indigo-100 dark:border-indigo-900/50">
+                        <div class="px-6 py-4 border-b border-indigo-100 dark:border-indigo-900/50 flex justify-between items-center">
                             <h3 class="text-lg font-medium text-indigo-900 dark:text-indigo-300">Who owes what?</h3>
+                            @if(count($settlements) > 0)
+                            <span class="px-2 py-0.5 text-xs font-bold bg-indigo-100 text-indigo-800 rounded-full">{{ count($settlements) }} pending</span>
+                            @endif
                         </div>
                         <div class="p-6">
-                            <ul class="space-y-3">
-                                @forelse($settlements as $settlement)
-                                <li class="flex items-center justify-between text-sm py-2 px-4 bg-white dark:bg-gray-800 rounded shadow-sm border border-indigo-50 dark:border-indigo-900">
+                            @if(count($settlements) > 0)
+                            <div class="space-y-3">
+                                @foreach(array_slice($settlements, 0, 3) as $settlement)
+                                <div class="flex items-center justify-between text-sm">
                                     <div class="flex items-center">
-                                        <span class="font-bold text-red-500">{{ $settlement['from']->name }}</span>
-                                        <svg class="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <span class="font-medium text-gray-700 dark:text-gray-300">{{ $settlement['from']->name }}</span>
+                                        <svg class="w-3 h-3 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                         </svg>
-                                        <span class="font-bold text-green-500">{{ $settlement['to']->name }}</span>
+                                        <span class="font-medium text-gray-700 dark:text-gray-300">{{ $settlement['to']->name }}</span>
                                     </div>
-                                    <div class="flex items-center space-x-3">
-                                        <span class="font-bold text-gray-900 dark:text-white">{{ number_format($settlement['amount'], 2) }} €</span>
-                                        @if(auth()->id() === $settlement['from']->id)
-                                        <form action="{{ route('colocations.payments.store', $colocation) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="to_user_id" value="{{ $settlement['to']->id }}">
-                                            <input type="hidden" name="amount" value="{{ $settlement['amount'] }}">
-                                            <button type="submit" class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded hover:bg-indigo-700 uppercase">Mark Paid</button>
-                                        </form>
-                                        @endif
-                                    </div>
-                                </li>
-                                @empty
-                                <div class="text-center py-4">
-                                    <svg class="mx-auto h-8 w-8 text-green-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <p class="text-sm font-medium text-green-700 dark:text-green-400">All settled up! Everyone's even.</p>
+                                    <span class="font-bold dark:text-white">{{ number_format($settlement['amount'], 2) }} €</span>
                                 </div>
-                                @endforelse
-                            </ul>
+                                @endforeach
+                                @if(count($settlements) > 3)
+                                <p class="text-xs text-gray-500 text-center mt-2">+ {{ count($settlements) - 3 }} more settlements</p>
+                                @endif
+                                <div class="mt-4 pt-4 border-t border-indigo-100 dark:border-indigo-900/50">
+                                    <a href="{{ route('colocations.balances', $colocation) }}" class="block w-full text-center px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded hover:bg-indigo-700 uppercase tracking-widest">
+                                        Settle Up
+                                    </a>
+                                </div>
+                            </div>
+                            @else
+                            <div class="text-center py-4">
+                                <svg class="mx-auto h-8 w-8 text-green-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <p class="text-sm font-medium text-green-700 dark:text-green-400">All settled up!</p>
+                            </div>
+                            @endif
                         </div>
                     </div>
 
