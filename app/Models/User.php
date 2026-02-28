@@ -113,17 +113,28 @@ class User extends Authenticatable
     }
 
     /**
-     * Get current active membership of the user.
+     * Get all current active memberships of the user.
      *
-     * @return Membership|null
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function activeMembership()
+    public function activeMemberships()
     {
         return $this->memberships()
             ->whereNull('left_at')
             ->whereHas('colocation', function ($query) {
                 $query->where('status', 'active');
             })
-            ->first();
+            ->with('colocation')
+            ->get();
+    }
+
+    /**
+     * Get first current active membership of the user.
+     *
+     * @return Membership|null
+     */
+    public function activeMembership()
+    {
+        return $this->activeMemberships()->first();
     }
 }
