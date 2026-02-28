@@ -109,8 +109,8 @@ class InvitationController extends Controller
             return redirect()->route('dashboard')->with('error', 'The invitation is invalid or has expired. (-_-)');
         }
 
-        // Check if user has active colocation
-        if (auth()->user()->hasActiveColocation()) {
+        // Check if user has active colocation (Admins are exempt)
+        if (!auth()->user()->is_admin && auth()->user()->hasActiveColocation()) {
             return redirect()->route('dashboard')->with('error', 'You already have an active colocation. (-_-)');
         }
 
