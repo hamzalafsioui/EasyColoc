@@ -23,9 +23,16 @@ class DashboardController extends Controller
             'total_banned_users' => User::where('is_banned', true)->count(),
         ];
 
-        $users = User::latest()->paginate(20);
+        return view('admin.dashboard', compact('stats'));
+    }
 
-        return view('admin.dashboard', compact('stats', 'users'));
+    /**
+     * Display the users list for management.
+     */
+    public function users()
+    {
+        $users = User::latest()->paginate(20);
+        return view('admin.users', compact('users'));
     }
 
     /**
