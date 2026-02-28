@@ -34,7 +34,7 @@ class ColocationController extends Controller
      */
     public function store(StoreColocationRequest $request)
     {
-        if (auth()->user()->hasActiveColocation()) {
+        if (!auth()->user()->is_admin && auth()->user()->hasActiveColocation()) {
             return redirect()->back()
                 ->with('error', 'You already have an active colocation. You must leave or cancel it before creating a new one.');
         }
@@ -110,10 +110,24 @@ class ColocationController extends Controller
             abort(403);
         }
 
+        if ($request->status === 'cancelled') {
+            $balances = $colocation->calculateBalances();
+            $nonZeroBalances = array_filter($balances, fn($b) => round($b['balance'], 2) != 0);
+
+            if (!empty($nonZeroBalances)) {
+                return redirect()->back()
+                    ->with('error', 'Cannot cancel colocation until all balances are settled (0.00).');
+            }
+        }
+
         $colocation->update($request->only('name', 'description', 'status'));
 
-        return redirect()->route('colocations.show', $colocation)
-            ->with('success', 'Colocation updated successfully. -)');
+        if ($colocation->status === 'cancelled') {
+            // Update reputation (+1) for all members if cancelled via update
+            foreach ($colocation->memberships()->whereNull('left_at')->get() as $m) {
+                $m->user->updateReputation(1);
+            }
+        }
     }
 
     /**
@@ -145,16 +159,34 @@ class ColocationController extends Controller
         }
 
         $balances = $colocation->calculateBalances();
+        $nonZeroBalances = array_filter($balances, fn($b) => round($b['balance'], 2) != 0);
 
-        // Update reputation for all members before cancelling
+        if (!empty($nonZeroBalances)) {
+            return redirect()->back()
+                ->with('error', 'Cannot cancel colocation until all balances are settled (0.00).');
+        }
+
+        // Update reputation (+1) for all members before cancelling
+        // Since balances are 0, they all get +1
         foreach ($colocation->memberships()->whereNull('left_at')->get() as $m) {
-            $userBalance = $balances[$m->user_id]['balance'] ?? 0;
-            $m->user->updateReputation($userBalance >= 0 ? 1 : -1);
+            $m->user->updateReputation(1);
         }
 
         $colocation->update(['status' => 'cancelled']);
 
         return redirect()->route('colocations.show', $colocation)
             ->with('success', 'Colocation has been cancelled and reputation updated. -)');
+    }
+
+    public function balances(Colocation $colocation)
+    {
+        if (!$colocation->users()->where('user_id', auth()->id())->exists()) {
+            abort(403);
+        }
+
+        $balances = $colocation->calculateBalances();
+        $settlements = $colocation->getSettlements();
+
+        return view('colocations.balances', compact('colocation', 'balances', 'settlements'));
     }
 }
